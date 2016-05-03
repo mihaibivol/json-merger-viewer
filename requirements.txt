@@ -1,0 +1,3 @@
+flask
+flask-bower
+-e git+https://github.com/inspirehep/json-merger.git#egg=json-merger
