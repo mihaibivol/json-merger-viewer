@@ -1,13 +1,13 @@
-var app = angular.module('diffApp', ['ds.objectDiff']);
+var app = angular.module('diffApp', ['ds.objectDiff', 'ngSanitize']);
 
 app.directive('mergeView', function() {
     var controller = function($scope, ObjectDiff) {
-        $scope.rootHeadDiff = ObjectDiff.diff($scope.mergeInfo.root,
-                                              $scope.mergeInfo.head)
-        $scope.rootUpdateDiff = ObjectDiff.diff($scope.mergeInfo.root,
-                                                $scope.mergeInfo.update)
-        $scope.headMergedDiff = ObjectDiff.diff($scope.mergeInfo.head,
-                                                $scope.mergeInfo.merged)
+        $scope.rootHeadDiff = ObjectDiff.diff($scope.mergeInfo.rhRoot,
+                                              $scope.mergeInfo.rhHead)
+        $scope.rootUpdateDiff = ObjectDiff.diff($scope.mergeInfo.ruRoot,
+                                                $scope.mergeInfo.ruUpdate)
+        $scope.headMergedDiff = ObjectDiff.diff($scope.mergeInfo.hmHead,
+                                                $scope.mergeInfo.hmMerged)
     };
 
     return {

@@ -1,19 +1,31 @@
 <div class="row-fluid">
-  <div class="col-md-4">
-    <div>Root Head Diff</div>
-    <pre ng-bind-html="rootHeadDiff | toJsonView"></pre>
-  </div>
-  <div class="col-md-4">
-    <div>After Update</div>
-    <pre ng-bind-html="headMergedDiff | toJsonView"></pre>
-  </div>
-  <div class="col-md-4">
-    <div>Root Update Diff</div>
-    <pre ng-bind-html="rootUpdateDiff | toJsonView"></pre>
+  <div class="col-md-12">
+    <h3>Initial Harvest</h3>
+    <pre>{{mergeInfo.root|json}}</pre>
   </div>
 </div>
+
+<div class="row-fluid">
+  <div class="col-md-6">
+    <h3>Harvest Update vs Initial Harvest</h3>
+    <pre ng-bind-html="rootUpdateDiff | toJsonView"></pre>
+  </div>
+  <div class="col-md-6">
+    <h3>Changes After Initial Harvest (Current Record vs Initial Harvest)</h3>
+    <pre ng-bind-html="rootHeadDiff | toJsonView"></pre>
+  </div>
+</div>
+
+<div class="row-fluid">
+  <div class="col-md-12">
+    <h3>Merged Version vs Current Record</h3>
+    <pre ng-bind-html="headMergedDiff | toJsonView"></pre>
+  </div>
+</div>
+
 <div class="row">
-<pre>
-{{mergeInfo.conflict | json}}
-</pre>
+  <div class="col-md-12">
+    <h3>Conflicts</h3>
+    <pre>{{mergeInfo.conflicts | json}}</pre>
+  </div>
 </div>
