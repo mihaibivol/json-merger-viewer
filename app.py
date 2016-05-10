@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import copy
 import json
 import os
 
@@ -10,6 +11,7 @@ from flask.ext.bower import Bower
 from json_merger import UpdateMerger, MergeError
 from json_merger.comparator import PrimaryKeyComparator
 from json_merger.list_unify import UnifierOps
+from json_merger.utils import get_obj_at_key_path
 
 
 app = Flask(__name__)
@@ -64,13 +66,77 @@ def index():
     return render_template('index.html', tests=tests)
 
 
+def put_id(obj, uid):
+    try:
+        obj['_id'] = uid
+    except:
+        pass
+
+
+def build_root_diff(root, revision, stats):
+    root = copy.deepcopy(root)
+    revision = copy.deepcopy(revision)
+    for key_path, stat in stats.items():
+        next_uid = -1
+        root_list = get_obj_at_key_path(root, key_path)
+        if root_list is None:
+            continue
+        rev_list = get_obj_at_key_path(revision, key_path)
+        if rev_list is None:
+            continue
+
+        for root_idx, root_obj in enumerate(root_list):
+            if root_idx in stat.root_root_match_uids:
+                put_id(root_obj, stat.root_root_match_uids[root_idx])
+            else:
+                put_id(root_obj, next_uid)
+                next_uid -= 1
+
+        for rev_idx, rev_obj in enumerate(rev_list):
+            if rev_idx in stat.lst_root_match_uids:
+                put_id(rev_obj, stat.lst_root_match_uids[rev_idx])
+            else:
+                put_id(rev_obj, next_uid)
+                next_uid -= 1
+
+    return root, revision
+
+
+def build_merged_diff(merged, merged_uids, revision, stats):
+    merged = copy.deepcopy(merged)
+    revision = copy.deepcopy(revision)
+    for key_path, uids in merged_uids.items():
+        merged_list = get_obj_at_key_path(merged, key_path)
+        if merged_list is None:
+            continue
+        for idx, uid in enumerate(uids):
+            try:
+                merged_list[idx]['_id'] = uid
+            except:
+                pass
+
+    for key_path, stat in stats.items():
+        rev_list = get_obj_at_key_path(revision, key_path)
+        next_uid = -1
+        if rev_list is None:
+            continue
+        for rev_idx, rev_obj in enumerate(rev_list):
+            if rev_idx in stat.match_uids:
+                put_id(rev_obj, stat.match_uids[rev_idx])
+            else:
+                put_id(rev_obj, next_uid)
+                next_uid -= 1
+
+    return merged, revision
+
+
 @app.route('/fixture/<fixture>')
 def show_fixture(fixture):
     root = json.loads(_read_fixture(fixture, 'root.json'))
     head = json.loads(_read_fixture(fixture, 'head.json'))
     update = json.loads(_read_fixture(fixture, 'update.json'))
     description = _read_fixture(fixture, 'description.txt')
-    # TODO call actual merge algorithm
+
     merger = UpdateMerger(root, head, update,
                           comparators=COMPARATORS,
                           list_merge_ops=LIST_MERGE_OPS)
@@ -81,11 +147,18 @@ def show_fixture(fixture):
         conflicts = e.content
     merged = merger.merged_root
 
+    r_h_root, r_h_head = build_root_diff(root, head, merger.head_stats)
+    r_u_root, r_u_updt = build_root_diff(root, update, merger.update_stats)
+    h_m_merged, h_m_head = build_merged_diff(merged, merger.match_uids,
+                                             head, merger.head_stats)
+
     merge_info = {
-            'root': root,
-            'head': head,
-            'update': update,
-            'merged': merged,
+            'r_h_root': r_h_root,
+            'r_h_head': r_h_head,
+            'r_u_root': r_u_root,
+            'r_u_update': r_u_updt,
+            'h_m_merged': h_m_merged,
+            'h_m_head': h_m_head,
             'conflicts': conflicts}
 
     return render_template('diff.html',

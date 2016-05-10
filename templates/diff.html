@@ -1,13 +1,14 @@
 {% extends 'layout.html' %}
 {% block head %}
-<script src="/bower/angular-object-diff/dist/angular-object-diff.min.js"></script>
-<link rel="stylesheet" href="/bower/angular-object-diff/dist/angular-object-diff.css">
+<script type="text/javascript" src="/bower/jsondiffpatch/public/build/jsondiffpatch.min.js"></script>
+<script type="text/javascript" src="/bower/jsondiffpatch/public/build/jsondiffpatch-formatters.min.js"></script>
+<link rel="stylesheet" href="/bower/jsondiffpatch/public/formatters-styles/html.css" type="text/css" />
 <script src="/static/app.js"></script>
 {% endblock %}
 {% block content %}
-  <h1>Diff</h1>
-  <h3>{{ description }}</h3>
+<h1>Merge</h1>
+<h2>{{ description }}</h2>
 <div ng-app="diffApp">
-    <merge-view merge-info='{{merge_info|tojson|safe}}'></merge-view>
+    <merge-view merge-info-txt='{{merge_info|tojson|safe}}'></merge-view>
 </div>
 {% endblock content %}
