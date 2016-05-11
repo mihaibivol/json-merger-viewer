@@ -6,7 +6,7 @@ import os
 
 from flask import Flask
 from flask import render_template
-from flask.ext.bower import Bower
+from flask.ext.assets import Bundle, Environment
 
 from json_merger import UpdateMerger, MergeError
 from json_merger.comparator import PrimaryKeyComparator
@@ -15,7 +15,26 @@ from json_merger.utils import get_obj_at_key_path
 
 
 app = Flask(__name__)
-Bower(app)
+assets = Environment(app)
+assets.load_path = [
+    os.path.join(os.path.dirname(__file__), 'node_modules'),
+    os.path.join(os.path.dirname(__file__), 'static')
+]
+main_js = Bundle(
+    'angular/angular.min.js',
+    'angular-sanitize/angular-sanitize.min.js')
+main_css = Bundle(
+    'bootstrap/dist/css/bootstrap.min.css')
+viewer_js = Bundle(
+    'angular-object-diff/dist/angular-object-diff.min.js',
+    'app.js')
+viewer_css = Bundle(
+    'angular-object-diff/dist/angular-object-diff.css')
+
+assets.register('main_js', main_js)
+assets.register('main_css', main_css)
+assets.register('viewer_js', viewer_js)
+assets.register('viewer_css', viewer_css)
 
 def _read_fixture(fixture, filename):
     fixture_dir = os.path.join(os.path.dirname(__file__), 'fixtures',

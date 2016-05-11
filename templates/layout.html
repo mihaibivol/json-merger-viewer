@@ -4,8 +4,12 @@
   JSON Merger
 </title>
 <head>
-<script src="/bower/angular/angular.min.js"></script>
-<link rel="stylesheet" href="/bower/bootstrap/dist/css/bootstrap.min.css">
+{% assets "main_js" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+{% assets "main_css" %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}">
+{% endassets %}
 {% block head %}
 {% endblock %}
 </head>

@@ -1,8 +1,7 @@
 ## HOWTO
 
 ```
-npm install -g bower
-bower install
+npm install
 pip install -r requirements.txt
 ```
 

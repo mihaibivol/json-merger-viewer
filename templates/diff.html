@@ -1,9 +1,11 @@
 {% extends 'layout.html' %}
 {% block head %}
-<script src="/bower/angular-sanitize/angular-sanitize.min.js"></script>
-<script src="/bower/angular-object-diff/dist/angular-object-diff.min.js"></script>
-<link rel="stylesheet" href="/bower/angular-object-diff/dist/angular-object-diff.css">
-<script src="/static/app.js"></script>
+{% assets "viewer_js" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+{% assets "viewer_css" %}
+    <link rel="stylesheet" href={{ ASSET_URL}}>
+{% endassets %}
 {% endblock %}
 {% block content %}
   <h1>Diff</h1>

@@ -1,0 +1,20 @@
+{
+  "name": "diff-viewer",
+  "version": "1.0.0",
+  "description": "View Record Merge Diffs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mihaibivol/json-merger-viewer.git"
+  },
+  "author": "Mihai Bivol <mbivol@cern.ch>",
+  "bugs": {
+    "url": "https://github.com/mihaibivol/json-merger-viewer/issues"
+  },
+  "homepage": "https://github.com/mihaibivol/json-merger-viewer",
+  "dependencies": {
+    "angular": "^1.5.5",
+    "angular-object-diff": "^1.0.3",
+    "angular-sanitize": "^1.5.5",
+    "bootstrap": "^3.3.6"
+  }
+}
