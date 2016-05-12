@@ -1,10 +1,10 @@
 {% extends 'layout.html' %}
 {% block head %}
 {% assets "viewer_js" %}
-    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    <script type="text/javascript" src="{{ request.environ.get('SCRIPT_NAME', '') + ASSET_URL }}"></script>
 {% endassets %}
 {% assets "viewer_css" %}
-    <link rel="stylesheet" href={{ ASSET_URL}}>
+    <link rel="stylesheet" href="{{ request.environ.get('SCRIPT_NAME', '') + ASSET_URL }}">
 {% endassets %}
 {% endblock %}
 {% block content %}
