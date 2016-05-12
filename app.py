@@ -132,7 +132,7 @@ def show_fixture(fixture):
     try:
         merger.merge()
     except MergeError as e:
-        conflicts = e.content
+        conflicts = [json.loads(c.to_json()) for c in e.content]
     merged = merger.merged_root
 
     rh_root, rh_head = build_root_diff(merger.aligned_root,
