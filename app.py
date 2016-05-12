@@ -146,6 +146,8 @@ def show_fixture(fixture):
 
     merge_info = {
             'root': root,
+            'head': head,
+            'update': update,
             'rhRoot': rh_root,
             'rhHead': rh_head,
             'ruRoot': ru_root,
