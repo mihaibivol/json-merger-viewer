@@ -3,7 +3,7 @@
   <h1> Merger Test Cases </h1>
   <ul>
     {% for test in tests %}
-    <li><a href="/fixture/{{test}}">{{test}}</a></i>
+    <li><a href="{{url_for('show_fixture', fixture=test)}}">{{test}}</a></i>
     {% endfor %}
   <ul>
 {% endblock %}

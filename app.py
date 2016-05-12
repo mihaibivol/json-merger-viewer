@@ -6,6 +6,7 @@ import os
 
 from flask import Flask
 from flask import render_template
+from flask_reverse_proxy import FlaskReverseProxied
 from flask.ext.assets import Bundle, Environment
 
 from json_merger import UpdateMerger, MergeError
@@ -35,6 +36,8 @@ assets.register('main_js', main_js)
 assets.register('main_css', main_css)
 assets.register('viewer_js', viewer_js)
 assets.register('viewer_css', viewer_css)
+
+proxied = FlaskReverseProxied(app)
 
 def _read_fixture(fixture, filename):
     fixture_dir = os.path.join(os.path.dirname(__file__), 'fixtures',

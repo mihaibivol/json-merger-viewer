@@ -1,3 +1,4 @@
 flask
 flask-assets
+flask-reverse-proxy
 -e git+https://github.com/inspirehep/json-merger.git#egg=json-merger
