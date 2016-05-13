@@ -11,6 +11,8 @@
   <h1>Diff</h1>
   <h3>{{ description }}</h3>
 <div ng-app="diffApp">
-    <merge-view merge-info='{{merge_info|tojson|safe}}'></merge-view>
+    <merge-view merge-info='{{merge_info|tojson|safe}}'
+                template="{{ request.environ.get('SCRIPT_NAME', '') + '/static/ng_templates/merge_view.html'}}">
+    </merge-view>
 </div>
 {% endblock content %}

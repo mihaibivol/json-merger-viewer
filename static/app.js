@@ -13,9 +13,10 @@ app.directive('mergeView', function() {
     return {
         'restrict': 'E',
         'scope': {
-            'mergeInfo': '='
+            'mergeInfo': '=',
+            'template': '@'
         },
         'controller': controller,
-        'templateUrl': '/static/ng_templates/merge_view.html'
+        'template': '<div ng-include="template"></div>'
     };
 });
