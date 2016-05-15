@@ -52,7 +52,7 @@ def index():
 app.route('/upload', methods=['POST'])(upload)
 app.route('/remove', methods=['POST'])(remove)
 app.route('/fixture/<dirname>/<fixture>')(show_fixture)
-app.config['SERVER_NAME'] = 'http://mibiweb.cern.ch'
+app.config['SERVER_NAME'] = 'mibiweb.cern.ch'
 
 if __name__ == '__main__':
     app.config['SERVER_NAME'] = 'localhost:5000'
