@@ -4,3 +4,4 @@ flask-reverse-proxy
 requests
 requests-file
 -e git+https://github.com/inspirehep/json-merger.git#egg=json-merger
+-e git+https://github.com/inspirehep/inspire-next.git#egg=inspire-next

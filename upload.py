@@ -7,14 +7,17 @@ import shutil
 from StringIO import StringIO
 
 from flask import redirect, request, url_for
+from inspirehep.dojson.processors import convert_marcxml
+
 
 def _get_file(fp, file_type):
     if file_type == 'json':
         return json.load(fp)
     elif file_type == 'xml':
-        raise NotImplementedError('Can not dojson now')
+        return convert_marcxml(fp).next()
     else:
         return {}
+
 
 def _get_json(field):
     url_field = field + 'URL'
@@ -56,6 +59,7 @@ def upload():
         if not head:
             return 'Head object is empty or none'
     except Exception as e:
+        raise
         return 'Error when deserializing {}'.format(e)
     description = 'Uploaded file.'
     os.makedirs(test_path)
@@ -75,4 +79,3 @@ def remove():
     path = os.path.join(os.path.dirname(__file__), 'uploads', test_name)
     shutil.rmtree(path)
     return redirect(url_for('index'))
-

@@ -55,4 +55,5 @@ app.route('/fixture/<dirname>/<fixture>')(show_fixture)
 
 
 if __name__ == '__main__':
+    app.config['SERVER_NAME'] = 'localhost:5000'
     app.run(host='0.0.0.0', debug=True)
