@@ -1,0 +1,52 @@
+<form method="POST" action="{{action}}"
+      enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="testname">Test Name</label>
+        <input id="testname" name="testname" value="test" class="form-control">
+        <p class="help-block">Letters, digits and underscores</p>
+    </div>
+    <div class="form-group">
+        <label for="root">Harvest V1
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-sm" ng-class="{active: isRootURL()}" ng-click="setRootURL()">URL</button>
+            <button type="button" class="btn btn-sm" ng-class="{active: isRootUpload()}" ng-click="setRootUpload()">UPLOAD</button>
+            <button type="button" class="btn btn-sm" ng-class="{active: isRootNone()}" ng-click="setRootNone()">EMPTY</button>
+          </div>
+        </label>
+        <input ng-if="isRootUpload()" type="file" id="root" name="root">
+        <input ng-if="isRootURL()" type="text" id="root" name="rootURL" class="form-control">
+        <p class="help-block" ng-if="!isRootNone()">Some record harvested from an external source.</p>
+    </div>
+    <div class="form-group">
+        <label for="update">Harvest V2
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-sm" ng-class="{active: updateURL}" ng-click="toggle('updateURL')">URL</button>
+            <button type="button" class="btn btn-sm" ng-class="{active: !updateURL}" ng-click="toggle('updateURL')">UPLOAD</button>
+          </div>
+        </label>
+        <input ng-if="!updateURL" type="file" id="update" name="update">
+        <input ng-if="updateURL" type="text" id="update" name="updateURL" class="form-control">
+        <p class="help-block">Record harvested after
+        <strong>Harvest V1</strong>, from the same source.
+        </p>
+    </div>
+    <div class="form-group">
+        <label for="head">Real Record
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-sm" ng-class="{active: headURL}" ng-click="toggle('headURL')">URL</button>
+            <button type="button" class="btn btn-sm" ng-class="{active: !headURL}" ng-click="toggle('headURL')">UPLOAD</button>
+          </div>
+        </label>
+        <input ng-if="!headURL" type="file" id="head" name="head">
+        <input ng-if="headURL" type="text" id="head" name="headURL" class="form-control">
+        <p class="help-block">The DB record between the two harvests.
+        It has to <strong>have</strong> the changes in <strong>V1</strong>
+        integrated, but <strong>not</strong> the changes in <strong>V2</strong>.
+        </p>
+    </div>
+    <p>Please provide valid hep records in MARCXML or JSON</p>
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary">
+    </div>
+</form>
+

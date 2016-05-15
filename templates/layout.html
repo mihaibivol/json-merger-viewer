@@ -13,7 +13,23 @@
 {% block head %}
 {% endblock %}
 </head>
+<style>
+  .hdr {
+    background-color: #113;
+    color: white;
+    text-align: right;
+    padding-right: 3em;
+  }
+  .hdr a {
+    text-decoration: none;
+    color: inherit;
+  }
+</style>
 <body>
+<div class="row hdr">
+  <a href="{{ url_for('index') }}"> <h1>JSON Record Merger</h1> </a>
+</div>
+
 {% block content %}
 {% endblock %}
 </body>

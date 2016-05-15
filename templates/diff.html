@@ -8,11 +8,11 @@
 {% endassets %}
 {% endblock %}
 {% block content %}
-  <h1>Diff</h1>
+  <h2>Test Description</h2>
   <h3>{{ description }}</h3>
 <div ng-app="diffApp">
     <merge-view merge-info='{{merge_info|tojson|safe}}'
-                template="{{ request.environ.get('SCRIPT_NAME', '') + '/static/ng_templates/merge_view.html'}}">
+                template="{{ url_for('static', filename='ng_templates/merge_view.html') }}">
     </merge-view>
 </div>
 {% endblock content %}

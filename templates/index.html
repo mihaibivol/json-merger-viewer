@@ -1,9 +1,42 @@
 {% extends 'layout.html' %}
+{% block head %}
+{% assets "upload_js" %}
+    <script type="text/javascript" src="{{ request.environ.get('SCRIPT_NAME', '') + ASSET_URL }}"></script>
+{% endassets %}
+{% endblock %}
 {% block content %}
-  <h1> Merger Test Cases </h1>
-  <ul>
-    {% for test in tests %}
-    <li><a href="{{url_for('show_fixture', fixture=test)}}">{{test}}</a></i>
-    {% endfor %}
-  <ul>
+  <div class="row-fluid">
+    <div class="col-md-4">
+        <h2>Manual Tests</h2>
+        <dl>
+          {% for test in tests %}
+          <dt><a href="{{url_for('show_fixture', dirname='fixtures', fixture=test)}}">{{test}}</a></dt>
+          {% endfor %}
+        <dl>
+    </div>
+    <div class="col-md-4">
+        <h2>Uploaded Tests</h2>
+        <dl>
+          {% for test in uploads %}
+          <dt>
+          <div class="row">
+          <a class="col-md-9" href="{{url_for('show_fixture', dirname='uploads', fixture=test)}}">{{test}}</a>
+          <form class="col-md-3" action={{url_for('remove')}} method="POST">
+              <input type=hidden name="test" value="{{test}}">
+              <input type=submit class="btn btn-xs btn-danger" value="REMOVE">
+          </form>
+          </div>
+          </dt>
+          {% endfor %}
+        <dl>
+    </div>
+    <div class="col-md-4">
+        <h2>Upload a new tests</h2>
+        <div ng-app="uploadApp">
+            <upload-form action="{{url_for('upload')}}"
+                         template="{{url_for('static', filename='ng_templates/upload_form.html')}}">
+            </upload-form>
+        </div>
+    </div>
+  </div>
 {% endblock %}
