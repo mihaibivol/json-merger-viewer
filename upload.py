@@ -6,7 +6,7 @@ import shutil
 
 from StringIO import StringIO
 
-from flask import redirect, request, url_for
+from flask import redirect, request, url_for, current_app
 from inspirehep.dojson.processors import convert_marcxml
 
 
@@ -14,6 +14,7 @@ def _get_file(fp, file_type):
     if file_type == 'json':
         return json.load(fp)
     elif file_type == 'xml':
+        print current_app.config.get('SERVER_NAME', 'dafadsfsad')
         return convert_marcxml(fp).next()
     else:
         return {}
