@@ -6,7 +6,7 @@
 {% endblock %}
 {% block content %}
   <div class="row-fluid">
-    <div class="col-md-4">
+      <div class={{column_class}}>
         <h2>Manual Tests</h2>
         <dl>
           {% for test in tests %}
@@ -14,23 +14,26 @@
           {% endfor %}
         <dl>
     </div>
-    <div class="col-md-4">
+    <div class="{{column_class}}">
         <h2>Uploaded Tests</h2>
         <dl>
           {% for test in uploads %}
           <dt>
           <div class="row">
           <a class="col-md-9" href="{{url_for('show_fixture', dirname='uploads', fixture=test)}}">{{test}}</a>
+          {% if not readonly %}
           <form class="col-md-3" action={{url_for('remove')}} method="POST">
               <input type=hidden name="test" value="{{test}}">
               <input type=submit class="btn btn-xs btn-danger" value="REMOVE">
           </form>
+          {% endif %}
           </div>
           </dt>
           {% endfor %}
         <dl>
     </div>
-    <div class="col-md-4">
+    {% if not readonly %}
+    <div class="{{column_class}}">
         <h2>Upload a new tests</h2>
         <div ng-app="uploadApp">
             <upload-form action="{{url_for('upload')}}"
@@ -38,5 +41,6 @@
             </upload-form>
         </div>
     </div>
+    {% endif %}
   </div>
 {% endblock %}

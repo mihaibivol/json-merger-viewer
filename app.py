@@ -46,14 +46,27 @@ def index():
         uploads = [d for d in os.listdir(upload_dir)]
     except:
         uploads = []
-    return render_template('index.html', tests=tests, uploads=uploads)
+    if app.config.get('READONLY'):
+        readonly = True
+        column_class = 'col-md-6'
+    else:
+        readonly= False
+        column_class = 'col-md-4'
+    return render_template('index.html',
+                           tests=tests, uploads=uploads,
+                           readonly=readonly, column_class=column_class)
 
 
-app.route('/upload', methods=['POST'])(upload)
-app.route('/remove', methods=['POST'])(remove)
 app.route('/fixture/<dirname>/<fixture>')(show_fixture)
-app.config['SERVER_NAME'] = 'mibiweb.cern.ch'
+
+
+def get_app(config_dict):
+    app.config.update(config_dict)
+    if not app.config.get('READONLY'):
+        app.route('/upload', methods=['POST'])(upload)
+        app.route('/remove', methods=['POST'])(remove)
+
 
 if __name__ == '__main__':
-    app.config['SERVER_NAME'] = 'localhost:5000'
+    app_inst = get_app({'SERVER_NAME': 'localhost:5000'})
     app.run(host='0.0.0.0', debug=True)
