@@ -1,5 +1,23 @@
+<nav class="navbar-fixed-bottom navbar navbar-default nav-pills">
+<div class="container container-fluid">
+<ul class="nav navbar-nav">
+  <li><a ng-click="scrollTo('initial-a')">Initial Harvest</a></li>
+  <li><a ng-click="scrollTo('current-a')">Current Record</a></li>
+  <li><a ng-click="scrollTo('update-a')">Harvest Update</a></li>
+  <li><a ng-click="scrollTo('merged-a')">Merged Record</a></li>
+  <li><a ng-click="scrollTo('conflicts-a')">Conflicts</a></li>
+</ul>
+<div class="nav navbar-right btn-group">
+    <div ng-click="setMode('min')" class="btn navbar-btn btn-primary">Small Diff</div>
+    <div ng-click="setMode('full')" class="btn navbar-btn btn-primary">Full Diff</div>
+    <div ng-click="setMode('sbs')" class="btn navbar-btn btn-primary">Side by Side</div>
+</div>
+</div>
+</nav>
+<div>
 <div class="row-fluid">
   <h3>Initial Harvest</h3>
+  <span id="initial-a"></span>
   <div class="col-md-12">
     <pre>{{mergeInfo.root|json}}</pre>
   </div>
@@ -7,44 +25,50 @@
 
 <div class="row-fluid">
   <h3>Current Record</h3>
-  <div class="col-md-6">
+  <span id="current-a"></span>
+  <div class="{{colClass}}" ng-if="showOrig">
     <h4>Current Record</h4>
     <pre>{{mergeInfo.head|json}}</pre>
   </div>
-  <div class="col-md-6">
+  <div class="{{colClass}}">
     <h4>Current Record vs Initial Harvest</h3>
-    <pre ng-bind-html="rootHeadDiff | toJsonView"></pre>
+    <pre ng-if="fullDiff" ng-bind-html="rootHeadDiff | toJsonView"></pre>
+    <pre ng-if="!fullDiff" ng-bind-html="rootHeadDiff | toJsonDiffView"></pre>
   </div>
 </div>
 
 <div class="row-fluid">
   <h3>Harvest Update</h3>
-  <div class="col-md-6">
+  <span id="update-a"></span>
+  <div class="{{colClass}}" ng-if="showOrig">
     <h4>Harvest Update</h4>
     <pre>{{mergeInfo.update|json}}</pre>
   </div>
-  <div class="col-md-6">
+  <div class="{{colClass}}">
     <h4>Harvest Update vs Initial Harvest</h4>
-    <pre ng-bind-html="rootUpdateDiff | toJsonView"></pre>
+    <pre ng-if="fullDiff" ng-bind-html="rootUpdateDiff | toJsonView"></pre>
+    <pre ng-if="!fullDiff" ng-bind-html="rootUpdateDiff | toJsonDiffView"></pre>
   </div>
 </div>
 
-
 <div class="row-fluid">
   <h3>Merged Version</h3>
-  <div class="col-md-6">
+  <span id="merged-a"></span>
+  <div class="{{colClass}}" ng-if="showOrig">
     <h4>Merged Version</h4>
     <pre>{{mergeInfo.hmMerged|json}}</pre>
   </div>
-  <div class="col-md-6">
+  <div class="{{colClass}}">
     <h4>Merged Version vs Current Record</h4>
-    <pre ng-bind-html="headMergedDiff | toJsonView"></pre>
+    <pre ng-if="fullDiff" ng-bind-html="headMergedDiff | toJsonView"></pre>
+    <pre ng-if="!fullDiff" ng-bind-html="headMergedDiff | toJsonDiffView"></pre>
   </div>
 </div>
 
 <div class="row">
   <div class="col-md-12">
     <h3>Conflicts</h3>
+    <span id="conflicts-a"></span>
     <pre>{{mergeInfo.conflicts | json}}</pre>
   </div>
 </div>
