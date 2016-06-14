@@ -5,7 +5,7 @@ import os
 from flask import Flask
 from flask import render_template
 from flask_reverse_proxy import FlaskReverseProxied
-from flask.ext.assets import Bundle, Environment
+from flask_assets import Bundle, Environment
 
 from merge_view import show_fixture
 from upload import upload, remove
@@ -69,4 +69,4 @@ def get_app(config_dict):
 
 if __name__ == '__main__':
     app_inst = get_app({'SERVER_NAME': 'localhost:5000'})
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0')

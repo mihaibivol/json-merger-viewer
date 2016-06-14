@@ -6,10 +6,9 @@ import os
 from flask import render_template
 
 from json_merger import UpdateMerger, MergeError
-from json_merger.comparator import PrimaryKeyComparator
-from json_merger.list_unify import UnifierOps
 from json_merger.utils import get_obj_at_key_path
 
+from merger_config import COMPARATORS, LIST_MERGE_OPS
 
 def _read_fixture(dirname, fixture, filename):
     fixture_dir = os.path.join(os.path.dirname(__file__), dirname,
@@ -17,39 +16,6 @@ def _read_fixture(dirname, fixture, filename):
     with open(os.path.join(fixture_dir, filename)) as f:
         return f.read()
 
-
-class AuthorComparator(PrimaryKeyComparator):
-
-    primary_key_fields = ['inspire_id']
-
-    def equal(self, l1_idx, l2_idx):
-        ret = super(AuthorComparator, self).equal(l1_idx, l2_idx)
-        if not ret:
-            return (self.l1[l1_idx]['full_name'][:5] ==
-                    self.l2[l2_idx]['full_name'][:5])
-        else:
-            return True
-
-
-class TitleComparator(PrimaryKeyComparator):
-
-    primary_key_fields = ['source']
-
-
-class AffiliationComparator(PrimaryKeyComparator):
-
-    primary_key_fields = ['value']
-
-
-COMPARATORS = {
-    'authors': AuthorComparator,
-    'authors.affiliations': AffiliationComparator,
-    'titles': TitleComparator
-}
-LIST_MERGE_OPS = {
-    'titles': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST,
-    'authors.affiliations': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST
-}
 
 
 def build_root_diff(root, revision, stats):
