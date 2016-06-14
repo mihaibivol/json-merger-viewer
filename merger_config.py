@@ -48,10 +48,12 @@ COMPARATORS = {
     'titles': SourceComparator,
     'abstracts': SourceComparator,
     'collections': CollectionsComparator,
+    'external_system_numbers': ExtSysNumberComparator,
 }
 LIST_MERGE_OPS = {
     'titles': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST,
     'authors.affiliations': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST,
     'abstracts': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST,
     'collections': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST,
+    'external_system_numbers': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST,
 }
