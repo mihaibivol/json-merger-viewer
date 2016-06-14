@@ -23,26 +23,35 @@ def author_tokenize(name):
 
 
 class AuthorComparator(AuthorComparatorBase):
-
     distance_function = AuthorNameDistanceCalculator(author_tokenize)
 
 
-class TitleComparator(PrimaryKeyComparator):
-
+class SourceComparator(PrimaryKeyComparator):
     primary_key_fields = ['source']
 
 
 class AffiliationComparator(PrimaryKeyComparator):
-
     primary_key_fields = ['value']
+
+
+class CollectionsComparator(PrimaryKeyComparator):
+    primary_key_fields = ['primary']
+
+
+class ExtSysNumberComparator(PrimaryKeyComparator):
+    primary_key_fields = ['institute']
 
 
 COMPARATORS = {
     'authors': AuthorComparator,
     'authors.affiliations': AffiliationComparator,
-    'titles': TitleComparator
+    'titles': SourceComparator,
+    'abstracts': SourceComparator,
+    'collections': CollectionsComparator,
 }
 LIST_MERGE_OPS = {
     'titles': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST,
-    'authors.affiliations': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST
+    'authors.affiliations': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST,
+    'abstracts': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST,
+    'collections': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST,
 }
