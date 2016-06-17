@@ -3,10 +3,12 @@ import json
 
 import os
 
-from flask import render_template
+from flask import request, render_template
 
-from json_merger import UpdateMerger, MergeError
+from json_merger.merger import ListAlignMerger, MergeError
 from json_merger.utils import get_obj_at_key_path
+from json_merger.dict_merger import DictMergerOps
+from json_merger.list_unify import UnifierOps
 
 from merger_config import COMPARATORS, LIST_MERGE_OPS
 
@@ -57,9 +59,12 @@ def show_fixture(dirname, fixture):
     head = json.loads(_read_fixture(dirname, fixture, 'head.json'))
     update = json.loads(_read_fixture(dirname, fixture, 'update.json'))
     description = _read_fixture(dirname, fixture, 'description.txt')
-    merger = UpdateMerger(root, head, update,
-                          comparators=COMPARATORS,
-                          list_merge_ops=LIST_MERGE_OPS)
+    listop = request.args.get('listop', UnifierOps.KEEP_ONLY_UPDATE_ENTITIES)
+    dictop = request.args.get('dictop', DictMergerOps.FALLBACK_KEEP_HEAD_CONFLICT)
+    merger = ListAlignMerger(root, head, update,
+                             dictop, listop,
+                             comparators=COMPARATORS,
+                             list_merge_ops=LIST_MERGE_OPS)
     conflicts = None
     try:
         merger.merge()
@@ -88,6 +93,12 @@ def show_fixture(dirname, fixture):
             'hmHead': hm_head,
             'conflicts': conflicts}
 
+    dictops = [d for d in DictMergerOps.__dict__ if not d.startswith('_')]
+    listops = [l for l in UnifierOps.__dict__ if not l.startswith('_')]
     return render_template('diff.html',
                            description=description,
+                           listops=listops,
+                           dictops=dictops,
+                           dictop=dictop,
+                           listop=listop,
                            merge_info=merge_info)

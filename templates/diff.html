@@ -8,11 +8,39 @@
 {% endassets %}
 {% endblock %}
 {% block content %}
-  <h2>Test Description</h2>
+  <nav class="navbar navbar-default">
+  <div class="row">
+    <span class="navbar-brand">Regular Field Default</span>
+    <ul class="nav navbar-nav">
+    {% for op in dictops %}
+    {% if op == dictop %}
+      <li class="active">
+    {% else %}
+      <li>
+    {% endif %}
+      <a href="?dictop={{op}}&listop={{listop}}">{{op|lower|replace('_', ' ')|title}}</a></li>
+    {% endfor %}
+    </ul>
+  </div>
+  <div class="row">
+    <span class="navbar-brand">List Field Default</span>
+    <ul class="nav navbar-nav">
+    {% for op in listops %}
+    {% if op == listop %}
+      <li class="active">
+    {% else %}
+      <li>
+    {% endif %}
+      <a href="?dictop={{dictop}}&listop={{op}}">{{op|lower|replace('_', ' ')|title}}</a></li>
+    {% endfor %}
+    </ul>
+ </div>
+ </nav>
+ <h2>Test Description</h2>
   <h3>{{ description }}</h3>
-<div ng-app="diffApp">
-    <merge-view merge-info='{{merge_info|tojson|safe}}'
-                template="{{ url_for('static', filename='ng_templates/merge_view.html') }}">
-    </merge-view>
-</div>
+  <div ng-app="diffApp">
+      <merge-view merge-info='{{merge_info|tojson|safe}}'
+                  template="{{ url_for('static', filename='ng_templates/merge_view.html') }}">
+      </merge-view>
+  </div>
 {% endblock content %}
