@@ -42,10 +42,13 @@ class ExtSysNumberComparator(PrimaryKeyComparator):
     primary_key_fields = ['institute']
 
 
+class URLComparator(PrimaryKeyComparator):
+    primary_key_fields = ['url']
+
+
 COMPARATORS = {
     'authors': AuthorComparator,
     'authors.affiliations': AffiliationComparator,
-    'titles': SourceComparator,
     'abstracts': SourceComparator,
     'collections': CollectionsComparator,
     'external_system_numbers': ExtSysNumberComparator,
@@ -56,4 +59,8 @@ LIST_MERGE_OPS = {
     'abstracts': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST,
     'collections': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST,
     'external_system_numbers': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST,
+    'publication_info': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST,
+    'subject_terms': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST,
+    'urls': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST,
+    'public_notes': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST,
 }
