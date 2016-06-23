@@ -5,7 +5,6 @@ requests
 requests-file
 -e git+https://github.com/inspirehep/json-merger.git@master#egg=json-merger[contrib]
 -e git+https://github.com/inspirehep/inspire-next.git@master#egg=inspire-next
--e git+https://github.com/inveniosoftware/dictdiffer.git@e637f35#egg=dictdiffer-1.5.1
 -e git+https://github.com/inspirehep/invenio-query-parser.git@invenio3-inspire#egg=invenio-query-parser==0.6.0
 
 # Packages where we need bleeding edge and are not yet available on PyPI
