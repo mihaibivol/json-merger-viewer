@@ -41,9 +41,14 @@ class CollectionsComparator(PrimaryKeyComparator):
 class ExtSysNumberComparator(PrimaryKeyComparator):
     primary_key_fields = ['institute']
 
-
 class URLComparator(PrimaryKeyComparator):
     primary_key_fields = ['url']
+
+
+class PubInfoComparator(PrimaryKeyComparator):
+    primary_key_fields = [['journal_title', 'journal_volume', 'page_start'],
+                          ['journal_title', 'journal_volume', 'artid']]
+
 
 
 COMPARATORS = {
@@ -52,6 +57,7 @@ COMPARATORS = {
     'abstracts': SourceComparator,
     'collections': CollectionsComparator,
     'external_system_numbers': ExtSysNumberComparator,
+    'publication_info': PubInfoComparator,
 }
 LIST_MERGE_OPS = {
     'titles': UnifierOps.KEEP_UPDATE_AND_HEAD_ENTITIES_HEAD_FIRST,
