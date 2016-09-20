@@ -6,16 +6,18 @@ import shutil
 
 from StringIO import StringIO
 
-from flask import redirect, request, url_for, current_app
-from inspirehep.dojson.processors import convert_marcxml
+from flask import redirect, request, url_for
+from dojson.contrib.marc21.utils import create_record
+from inspirehep.modules.migrator.tasks import split_stream
+from inspirehep.dojson.processors import overdo_marc_dict
 
 
 def _get_file(fp, file_type):
     if file_type == 'json':
         return json.load(fp)
     elif file_type == 'xml':
-        print current_app.config.get('SERVER_NAME', 'dafadsfsad')
-        return convert_marcxml(fp).next()
+        rec = overdo_marc_dict(create_record(split_stream(fp).next()))
+        return rec
     else:
         return {}
 
