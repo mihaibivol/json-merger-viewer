@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block head %}
 {% assets "upload_js" %}
-    <script type="text/javascript" src="{{ request.environ.get('SCRIPT_NAME', '') + ASSET_URL }}"></script>
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {% endassets %}
 {% endblock %}
 {% block content %}

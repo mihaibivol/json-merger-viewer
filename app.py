@@ -4,7 +4,6 @@ import os
 
 from flask import Flask
 from flask import render_template
-from flask_reverse_proxy import FlaskReverseProxied
 from flask_assets import Bundle, Environment
 
 from merge_view import show_fixture
@@ -35,8 +34,6 @@ assets.register('viewer_js', viewer_js)
 assets.register('viewer_css', viewer_css)
 assets.register('upload_js', upload_js)
 
-proxied = FlaskReverseProxied(app)
-
 @app.route('/')
 def index():
     fixture_dir = os.path.join(os.path.dirname(__file__), 'fixtures')
@@ -60,13 +57,9 @@ def index():
 app.route('/fixture/<dirname>/<fixture>')(show_fixture)
 
 
-def get_app(config_dict):
+def create_app(config_dict):
     app.config.update(config_dict)
     if not app.config.get('READONLY'):
         app.route('/upload', methods=['POST'])(upload)
         app.route('/remove', methods=['POST'])(remove)
-
-
-if __name__ == '__main__':
-    app_inst = get_app({'SERVER_NAME': 'localhost:5000'})
-    app.run(host='0.0.0.0')
+    return app

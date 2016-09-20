@@ -5,10 +5,10 @@
 </title>
 <head>
 {% assets "main_js" %}
-    <script type="text/javascript" src="{{ request.environ.get('SCRIPT_NAME', '') + ASSET_URL }}"></script>
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {% endassets %}
 {% assets "main_css" %}
-    <link rel="stylesheet" href="{{ request.environ.get('SCRIPT_NAME', '') + ASSET_URL }}">
+    <link rel="stylesheet" href="{{ ASSET_URL }}">
 {% endassets %}
 {% block head %}
 {% endblock %}
