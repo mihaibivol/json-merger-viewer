@@ -8,15 +8,18 @@ from StringIO import StringIO
 
 from flask import redirect, request, url_for
 from dojson.contrib.marc21.utils import create_record
-from inspirehep.modules.migrator.tasks import split_stream
+from inspirehep.modules.migrator.tasks.records import split_stream
 from inspirehep.dojson.processors import overdo_marc_dict
+from inspirehep.factory import create_app
 
 
 def _get_file(fp, file_type):
     if file_type == 'json':
         return json.load(fp)
     elif file_type == 'xml':
-        rec = overdo_marc_dict(create_record(split_stream(fp).next()))
+        inspire_app = create_app()
+        with inspire_app.app_context():
+            rec = overdo_marc_dict(create_record(split_stream(fp).next()))
         return rec
     else:
         return {}
