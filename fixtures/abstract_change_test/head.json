@@ -1,0 +1,12 @@
+{
+    "abstracts": [
+        {
+            "value": "First Abstract",
+            "source": "arxiv"
+        },
+        {
+            "value": "Magpie Abstract",
+            "source": "magpie"
+        }
+    ]
+}
